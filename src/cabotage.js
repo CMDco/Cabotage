@@ -126,7 +126,7 @@ function handleDisconnect(socketid){
 
 function triggerType(typename, obj){
   if(otypes[typename] === undefined){
-    throw new Error(`triggerType :: There exists no registerd type named ${typename}`);
+    throw new Error(`triggerType :: There exists no registered type named ${typename}`);
   }
   let uniqIdentifier = generateUniqueIdentifier(typename, obj);
   db[uniqIdentifier].forEach((socket) => {
@@ -139,6 +139,9 @@ function triggerType(typename, obj){
 }
 
 function generateUniqueIdentifier(typename, obj){
+  if(otypes[typename] === undefined){
+    throw new Error(`generateUniqueIdentifier :: There exists no registered type named ${typename}`);
+  }
   let uniqKeys = otypes[typename].keys;
   return typename + uniqKeys.reduce((acc, curr) => {
     return acc + curr + obj[curr];
