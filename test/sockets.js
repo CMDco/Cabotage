@@ -6,7 +6,6 @@ function subscribe(uri, query, variables = null, callback) {
     socket = io('http://localhost:4000');
     socket.on('init', ({id}) => {
       socketid = id;
-      console.log(id);
       socket.on(socketid, (data) => { callback(data) });
       socket.emit(socketid, { query });
     });
@@ -28,6 +27,6 @@ function unsubscribe() {
   socket.emit('unsubscribe', { socketid });
 }
 
-subscribe(null, '{ getMessage(id: 0) { content} }', null, function (data) {
+subscribe(null, '{ getMessage(id: 0) { content id Messages{id content location{country{state{town{space}}}}}thisisatest} }', null, function (data) {
   console.log(data);
 });
